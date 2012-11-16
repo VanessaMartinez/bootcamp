@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <title>Globant :: Welcome to the HTML5 bootcamp</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+  </head>
+<body>
+   <div data-role="page">
+      <div data-role="header">
+         <h1>Peliculas</h1>
+      </div>
+      <div data-role="content">	
+         <p>Presione buscar para obtener el listado de las peliculas disponibles.</p>	
+         <input type="button" id="boton1" value="BUSCAR">
+         <ul data-role="listview" id="lista"></ul>	
+      </div>
+      <div data-role="footer">
+         <h1>Fin</h1>
+      </div>
+   </div>
+</body>
+<script type="text/javascript">
+
+$(document).ready(inicializarEventos);
+
+function inicializarEventos(){
+  $('#boton1').click( function() {$.ajax({
+	  type: 'GET',
+          url:'http://bootcamp.aws.af.cm/movies',
+          dataType:'json',
+ 	  success: function(datos) {
+          console.log(datos);capturarPeliculas(datos);},
+ 	  error: function(datos) {console.log(datos);},
+		}) ; 
+
+       })
+}
+function capturarPeliculas(datos){
+   var agregar="";
+   for(i=0;i<datos.d.results.length;i++){
+      agregar=agregar+'<li><a href="#"><img src="'+datos.d.results[i].BoxArt.SmallUrl+'">'+datos.d.results[i].Name+'. '+datos.d.results[i].ReleaseYear+'. '+datos.d.results[i].Synopsis+'</a></li>';
+   }
+   $('#lista').html(agregar);
+   $('#lista').listview('refresh');
+}
+
+</script>
+</html>
+ 						 		  

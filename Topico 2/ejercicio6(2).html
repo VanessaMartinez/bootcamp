@@ -1,0 +1,43 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>Globant :: Welcome to the HTML5 bootcamp</title> 
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+</head> 
+<body> 
+   <div data-role="page">
+      <div data-role="header">
+         <h1>Titulo de la pagina</h1>
+      </div>
+      <div data-role="content">	
+         <p>Presione el boton para ver la animacion "cargado...", luego presione ESC para cancelarla.</p>	
+  	 <input type="button" id="boton1" value="OK">	
+      </div>
+      <div data-role="footer">
+         <h1>Pie de pagina</h1>
+      </div>
+   </div>
+</body>
+<script>
+$(document).ready(inicializarEventos);
+
+function inicializarEventos(){
+  $("#boton1").click(presionboton);
+  $(document).keydown(function(e){  
+    if(e.keyCode == 27){  
+        presionesc();  
+    }});  	
+}
+function presionboton(){
+  $.mobile.showPageLoadingMsg('b',"cargando...");
+}
+function presionesc(){
+  $.mobile.hidePageLoadingMsg();
+}
+</script>
+</html>
