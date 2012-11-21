@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Globant :: Welcome to the HTML5 bootcamp</title>
+  </head>
+<body>
+<h1>Topic 3: Exercise 7</h1>
+
+<script language="javascript">
+
+	
+	document.write("Starts javascript, see the console...");	
+
+	var Movie = (function () {
+  	  	
+ 		 // constructor
+   		 var Movie = function () {};
+
+    		// prototype
+    		Movie.prototype = {
+    		    constructor: Movie,
+		    set : function(attr,value){this[attr]=value;},
+		    get : function(attr){return this[attr];},
+		    play : function(){return 'Playing '+ this.get('title') + ' ...';},
+		    stop : function(){return this.get('title')+' is stopped ...';}
+    		};
+
+    		// return module
+   		 return Movie;
+	})();
+
+	terminator = new Movie();
+	terminator.set('title','Terminator');
+	terminator.set('year','1984');
+	terminator.set('director','James Cameron');
+	alert(terminator['title']);
+
+	var ironman = new Movie();
+
+	ironman.set('title','Iron Man 2');
+	ironman.set('year','2010');
+	ironman.set('director','Jon Favreau');
+
+	console.log(terminator.play());
+	console.log(terminator.stop());
+
+        console.log(ironman.get('title')+'. '+ironman.get('director')+'. '+ironman.get('year'));
+
+
+
+	document.write("end script");
+</script>
+
+</body>
+</html>
