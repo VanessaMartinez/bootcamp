@@ -1,0 +1,46 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>Globant :: Welcome to the HTML5 bootcamp</title> 
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+	
+	<link rel="stylesheet" href="scripts/lib/jquery.mobile-1.1.0-rc.1.min.css" />
+	
+	 <script data-main="scripts/main" src="scripts/lib/require.js"></script>
+	
+</head> 
+<body style="visibility : hidden"> 
+   <div data-role="page">
+      <div data-role="header">
+         <h1>Topic 4</h1>
+      </div>
+      <div data-role="content" id="cont">	
+         <p>Press a button to see ...</p>	
+  	 <h1><a href="#d1" data-role="button" data-rel="dialog">Director´s quotes</a></h1>
+	 <h1><a href="#d2" data-role="button" data-rel="dialog">Director´s random quote</a></h1>
+      </div>
+      <div data-role="footer">
+         <h1>Topic 4</h1>
+      </div>
+   </div>
+   <div data-role="dialog" id="d1">
+      <div data-role="header" id="dialogheader"></div>
+      <div data-role="content">	
+         <div id="quotes"></div>
+	  <p>...</p>	
+      </div>
+      <div data-role="footer"><h1><a href="#" data-role="button" data-rel="back">Close</a></h1></div>
+   </div>	
+	<div data-role="dialog" id="d2">
+      <div data-role="header" id="d2dialogheader"></div>
+      <div data-role="content">	
+         <div id="d2quotes"></div>
+	  <p>...</p>	
+      </div>
+      <div data-role="footer"><h1><a href="#" data-role="button" data-rel="back">Close</a></h1></div>
+   </div>	
+
+</body>
+</html>
