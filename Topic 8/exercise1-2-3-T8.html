@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Globant :: Welcome to the HTML5 bootcamp</title>
+	<!--<link rel="stylesheet" type="text/css" media="screen"href="estilos.css" />-->
+</head>
+<body>
+
+<section>
+	
+            <textarea id="area" placeholder="Type your javascript code here..."></textarea>
+            <button id="save">Save</button><button id="run">Run!</button>
+            <p id="log"></p>
+	<script defer>
+              (function(){
+
+                try {
+                  (window.localStorage.getItem) // will throw in Firefox under some settings
+                } catch(e){
+                  return; // quit because dom.storage.enabled is false
+                }
+
+                var area = document.querySelector('#area');
+                // place content from previous edit
+                if (!area.value) {
+                  area.value = window.localStorage.getItem('value');
+                }
+                  
+                // your content will be saved locally
+                document.querySelector('#save').addEventListener('click', function () {
+                  window.localStorage.setItem('value', area.value);
+                  window.localStorage.setItem('timestamp', (new Date()).getTime());
+		  var log = document.querySelector("#log");
+		  log.textContent = 'Saved. Content will be available after browser refresh/reopen.';
+                }, false);
+
+		 // runs your enter code 
+                document.querySelector('#run').addEventListener('click', function () {
+					                  
+			eval(area.value);
+
+                }, false);
+		
+				
+            })();  
+	</script>
+</section>
+<br><br>
+<script>
+   window.onload = function(){
+     var dropzone = document.getElementById("area");
+       //nullify the effect on the page
+        document.body.addEventListener("drop",function (evento){
+            //Pero no en botones file (CH y FF)
+            if (evento.target.type!="file"){
+                evento.preventDefault();
+                return false;
+            }
+        }, true);
+    //handle the drop
+    dropzone.addEventListener("drop",function (event){
+            event.stopPropagation();
+            event.preventDefault();
+            readDroggedFile(event.dataTransfer.files);
+        } , false);
+    };
+    function readDroggedFile(files){
+        if (files.length > 0){
+            var lector = new FileReader();
+            lector.addEventListener("load",function(event){
+                    var mycode  = event.target.result;
+                    if (mycode.length>50000){
+                        mycode = mycode.substr(0,50000) + "\r\n";
+                    }
+                    document.getElementById("area").value = mycode;
+                }, false);
+            lector.readAsText(files[0]);
+         }
+    }
+</script>
+
+                
+</body>
+</html>
+
