@@ -5,73 +5,51 @@
     <title>Globant :: Welcome to the HTML5 bootcamp</title>
     <script type="text/javascript" src="jquery.js"></script>
   <style>
-  #caja_flotante{
-  left: 5%;
-  position: absolute;
-  top: 10%; 
-  width: 90%;
-  background-color: grey;
-  }
-  .bgtransparent{
-        position:fixed;
-        left:0;
-        top:0;
-        background-color:#555;
-        opacity:0.6;
-        filter:alpha(opacity=60);
-   }
-</style>
-<script type='text/javascript'>
-//<![CDATA[
-$(document).ready(function() {
-  var posicion = $("#caja_flotante").offset();
-  var margenSuperior = 15;
-  $(window).scroll(function() {
-    if ($(window).scrollTop() > posicion.top) {
-      $("#caja_flotante").stop().animate({
-        marginTop: $(window).scrollTop() - posicion.top + margenSuperior
-      });
-    } else {
-      $("#caja_flotante").stop().animate({
-        marginTop: 0
-      });
-    };
-  });
-});
-//]]>
-</script>
-</head>
-<body><div id=ventanaentera>
-	  <input type='text' id='alias'>
-	  <input type="button" id="boton1" value="OK">
-	  <div id="caja_flotante" align="center"></div>
-</div>
-</body>
-<script type="text/javascript">
-		function capturarPeliculas(datos){
-		var agregar="";
-		for(i=0;i<datos.d.results.length;i++){// width="111px" height="222px" alt="Texto Alternativo">
-			agregar=agregar+'<img src="'+datos.d.results[i].BoxArt.SmallUrl+'"><br> '+datos.d.results[i].Name+'. '+datos.d.results[i].ReleaseYear+'. '+datos.d.results[i].Synopsis+'<br>';
-		}
- 		
-                
-               $('#caja_flotante').html(agregar);
-		}
-
-      $('#boton1').click( function() {$.ajax({
+    #box{
+      left: 5%;
+      position: absolute;
+      top: 10%; 
+      width: 90%;
+      background-color: grey;
+    }
+    .bgtransparent{
+      position:fixed;
+      left:0;
+      top:0;
+      background-color:#555;
+      opacity:0.6;
+      filter:alpha(opacity=60);
+    }
+  </style>
+  </head>
+  <body>
+    <input type='text' id='alias'>
+    <input type='button' id='movies' value='Movies'>
+    <div id='box' align='center'></div>
+  </body>
+  <script type="text/javascript">
+    function capturingMovies(data){
+      var list="";
+      for(i=0;i<data.d.results.length;i++){
+        list=list+'<img src="'+data.d.results[i].BoxArt.SmallUrl+'"><br> '+data.d.results[i].Name+'. '+data.d.results[i].ReleaseYear+'. '+data.d.results[i].Synopsis+'<br>';
+      }
+      $('#box').html(list);
+    }
+    $('#movies').click( 
+      function() {
+        $.ajax({
 	  type: 'GET',
           url:'http://bootcamp.aws.af.cm/movies',
           dataType:'json',
- 	  success: function(datos) {//$('#ventanaentera').attr('background-color','red');
-console.log(datos);capturarPeliculas(datos);},
- 	  error: function(datos) {console.log(datos);},
-					})
-	//$('#ventanaentera').attr('background-color','red');
-	}) ; 
-
-
-</script>
+ 	  success: function(data) {
+            console.log(data);
+            capturingMovies(data);
+          },
+ 	  error: function(data) {
+            console.log(data);
+          },
+	})
+      }
+    ); 
+  </script>
 </html>
-
-
- 						 		  

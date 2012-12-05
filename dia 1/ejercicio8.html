@@ -5,29 +5,34 @@
     <title>Globant :: Welcome to the HTML5 bootcamp</title>
     <script type="text/javascript" src="jquery.js"></script>
   </head>
-<body>
-	  <input type='text' id='alias'>
-	  <input type="button" id="boton1" value="OK">
-	  <div id="div"></div>
-</body>
-<script type="text/javascript">
-		
-      	
-	$('#boton1').click( function() {$.ajax({
+  <body>
+    <input type='text' id='alias'>
+    <input type="button" id="greeting" value="Greeting">
+    <div id="div"></div>
+  </body>
+  <script type="text/javascript">
+    $('#greeting').click( 
+      function() {
+        $.ajax({
 	  type: 'GET',
           url:'http://bootcamp.aws.af.cm/welcome/vane',
           dataType:'json',
- 	  success: function(data) {$('#div').text(data.response) ;destacarNombre();},
- 	  error: function( data ) {$('#div').text('Error....chan!') ;$('#div').css('color','red') ;},
-})
-}) ; 
-
-function destacarNombre(){
-	var x=/vane/gi;
-	var y=$('#div').html();
-	$('#div').html(y.replace(x,"<b>"+x.exec(y)+"</b>"));}
-
-</script>
+ 	  success: function(data) {
+            $('#div').text(data.response) ;
+            highlightName();
+          },
+ 	  error: function( data ) {
+            $('#div').text('Error....') ;
+            $('#div').css('color','red') ;
+          },
+       })
+    }) ; 
+    function highlightName(){
+      var x=/vane/gi;
+      var y=$('#div').html();
+      $('#div').html(y.replace(x,"<b>"+x.exec(y)+"</b>"));
+    }
+  </script>
 </html>
 
 
