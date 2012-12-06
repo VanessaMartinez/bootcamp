@@ -1,47 +1,48 @@
 <!DOCTYPE html> 
 <html> 
-	<head> 
-	<title>Globant :: Welcome to the HTML5 bootcamp</title> 
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
-	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
-</head> 
-<body> 
-   <div data-role="page" id="pagina1">
-	<div data-role="header">
-	   <h1>Pagina 1</h1>
-	</div>
-	<div data-role="content">	
-	   <p>Esta es la primera pagina.</p>		
-	   <p>Visite la <a href="#pagina2" data-transition="flip">segunda</a> y la <a href="#pagina3" data-transition="fade">tercera</a></p>	
-	</div>
-	<div data-role="footer"><h1>pie de pagina</h1></div>
-   </div>
-
-   <div data-role="page" id="pagina2">
-	<div data-role="header">
-	   <h1>Pagina 2</h1>
-	</div>
-	<div data-role="content">	
-	   <p>Esta es la segunda pagina.</p>		
-	   <p>Visite la <a href="#pagina1" data-transition="pop">primera</a> y la <a href="#pagina3" data-transition="flow">tercera</a></p>	
-	</div>
-	<div data-role="footer"><h1>pie de pagina</h1></div>
-   </div>
- 
-   <div data-role="page" id="pagina3">
+  <head> 
+    <title>Globant :: Welcome to the HTML5 bootcamp</title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+  </head> 
+  <body> 
+    <div data-role='page' id='page1'>
       <div data-role="header">
-         <h1>Pagina 3</h1>
+        <h1>Page 1</h1>
+	</div>
+      <div data-role='content'>	
+        <p>This is the first page.</p>		
+        <p>Go to the <a href='#page2' data-transition='flip'>second</a> and <a href='#page3' data-transition='fade'>third</a> page</p>	
       </div>
-      <div data-role="content">	
-         <p>Esta es la tercera pagina.</p>		
-	 <p>Visite la <a href="#pagina1" data-transition="slide">primera</a> y la <a href="#pagina2" data-transition="slidedown">segunda</a>	
+      <div data-role='footer'>
+	<p>page footer</p>
       </div>
-    <div data-role="footer"><h1>pie de pagina</h1></div>
-
-   </div>
-</body>
+    </div>
+    <div data-role='page' id='page2'>
+      <div data-role='header'>
+        <h1>Page 2</h1>
+      </div>
+      <div data-role='content'>	
+        <p>This is the second page.</p>		
+        <p>Go to the <a href='#page1' data-transition='pop'>first</a> and <a href='#page3' data-transition='flow'>third</a> page</p>	
+      </div>
+      <div data-role='footer'>
+        <p>page footer</p>
+      </div>
+    </div>
+    <div data-role='page' id='page3'>
+      <div data-role='header'>
+        <h1>Page 3</h1>
+      </div>
+      <div data-role='content'>	
+        <p>This is the third page.</p>		
+	<p>Go to the <a href='#page1' data-transition='slide'>first</a> and <a href='#page2' data-transition='slidedown'>second</a> page </p>	
+      </div>
+      <div data-role='footer'>
+        <p>page footer</p>
+      </div>
+    </div>
+  </body>
 </html>
