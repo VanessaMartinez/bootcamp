@@ -1,113 +1,102 @@
 <!DOCTYPE html>
 <html lang="es" manifest="cache.appcache">
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Globant :: Welcome to the HTML5 bootcamp</title>
-	<!--<link rel="stylesheet" type="text/css" media="screen"href="estilos.css" />-->
-	<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
-</head>
-<body>
-
-<section>
-	
-            <textarea id="area" placeholder="Type your javascript code here..."></textarea>
-            <button id="save">Save</button><button id="run">Run!</button>
-            <p id="log"></p>
-	<script defer>
-              (function(){
-
-                try {
-                  (window.localStorage.getItem) // will throw in Firefox under some settings
-                } catch(e){
-                  return; // quit because dom.storage.enabled is false
-                }
-
-                var area = document.querySelector('#area');
-                // place content from previous edit
-                if (!area.value) {
-                  area.value = window.localStorage.getItem('value');
-                }
-                  
-                // your content will be saved locally
-                document.querySelector('#save').addEventListener('click', function () {
-                  window.localStorage.setItem('value', area.value);
-                  window.localStorage.setItem('timestamp', (new Date()).getTime());
-		  var log = document.querySelector("#log");
-		  log.textContent = 'Saved. Content will be available after browser refresh/reopen.';
-                }, false);
-
-		 // runs your enter code 
-                document.querySelector('#run').addEventListener('click', function () {
-					                  
-			eval(area.value);
-
-                }, false);
-		
-				
-            })();  
-	</script>
-</section>
-<br><br>
-<script>
-   window.onload = function(){
-     var dropzone = document.getElementById("area");
-       //nullify the effect on the page
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Globant :: Welcome to the HTML5 bootcamp</title>
+    <!--<link rel="stylesheet" type="text/css" media="screen"href="estilos.css" />-->
+    <script src="js/google.js"></script>
+    <script src="js/main.js"></script>
+  </head>
+  <body>
+    <section>
+      <h1>Javascript code tester</h1>
+      <textarea id="area" placeholder="Type your javascript code here..."></textarea>
+      <button id="save">Save</button>
+      <button id="run">Run!</button>
+      <p id="log"></p>
+      <script defer>
+        (function(){
+          try {
+            (window.localStorage.getItem) // will throw in Firefox under some settings
+          } catch(e){
+            return; // quit because dom.storage.enabled is false
+          }
+          var area = document.querySelector('#area');
+          // place content from previous edit
+          if (!area.value) {
+            area.value = window.localStorage.getItem('value');
+          }
+          // your content will be saved locally
+          document.querySelector('#save').addEventListener('click', function () {
+            window.localStorage.setItem('value', area.value);
+            window.localStorage.setItem('timestamp', (new Date()).getTime());
+	    var log = document.querySelector("#log");
+            log.textContent = 'Saved. Content will be available after browser refresh/reopen.';
+          }, false);
+          // runs your enter code 
+          document.querySelector('#run').addEventListener('click', function () {
+	    eval(area.value);
+          }, false);
+	})(); 
+      </script>
+    </section>
+    <br><br>
+    <script>
+      window.onload = function(){
+        var dropzone = document.getElementById("area");
+        //nullify the effect on the page
         document.body.addEventListener("drop",function (evento){
-            //Pero no en botones file (CH y FF)
-            if (evento.target.type!="file"){
-                evento.preventDefault();
-                return false;
-            }
+          if (evento.target.type!="file"){
+            evento.preventDefault();
+              return false;
+          }
         }, true);
-    //handle the drop
-    dropzone.addEventListener("drop",function (event){
-            event.stopPropagation();
-            event.preventDefault();
-            readDroggedFile(event.dataTransfer.files);
+        //handle the drop
+        dropzone.addEventListener("drop",function (event){
+          event.stopPropagation();
+          event.preventDefault();
+          readDroggedFile(event.dataTransfer.files);
         } , false);
-    };
-    function readDroggedFile(files){
+       };
+       function readDroggedFile(files){
         if (files.length > 0){
-            var lector = new FileReader();
-            lector.addEventListener("load",function(event){
-                    var mycode  = event.target.result;
-                    if (mycode.length>50000){
-                        mycode = mycode.substr(0,50000) + "\r\n";
-                    }
-                    document.getElementById("area").value = mycode;
-                }, false);
-            lector.readAsText(files[0]);
-         }
-    }
-</script>
-
-<div class="slide device-access" id="geolocation">
-          <style>
-            #see-position {
-              margin-bottom: 10px;
+          var lector = new FileReader();
+          lector.addEventListener("load",function(event){
+            var mycode  = event.target.result;
+            if (mycode.length>50000){
+              mycode = mycode.substr(0,50000) + "\r\n";
             }
-            #geo-map {
-              height: 280px;
-              width: 640px;
-            }
-            #geo-log {
-              background-color: red;
-              color: white;
-              padding: 5px;
-              border-radius: 5px;
-              visibility: hidden;
-            }
-          </style>
-          <header><h1>Geolocation</h1></header>
-          <section>
-
-          <button id="see-position">Show Position</button> <span id="geo-log"></span>
-          <div id="geo-map" class="gmap example">
-            <img src="http://maps.google.com/maps/api/staticmap?center=-38.020548,-57.589079&zoom=3&size=680x278&sensor=true"/>
-          </div>
-
-          <script defer>
+            document.getElementById("area").value = mycode;
+          }, false);
+          lector.readAsText(files[0]);
+        }
+      }
+    </script>
+    <div class="slide device-access" id="geolocation">
+      <style>
+        #see-position {
+          margin-bottom: 10px;
+        }
+        #geo-map {
+          height: 280px;
+          width: 640px;
+        }
+        #geo-log {
+          background-color: red;
+          color: white;
+          padding: 5px;
+          border-radius: 5px;
+            visibility: hidden;
+          }
+      </style>
+      <header><h1>Geolocation</h1></header>
+      <section>
+        <button id="see-position">Show Position</button> <span id="geo-log"></span>
+        <div id="geo-map" class="gmap example">
+          <img src="http://maps.google.com/maps/api/staticmap?center=-38.020548,-57.589079&zoom=3&size=680x278&sensor=true"/>
+        </div>
+        <script defer>
           (function() {
             var map = null;
             var geolog = document.querySelector('#geo-log');
@@ -152,27 +141,25 @@
                 geolog.textContent = 'Oops! Your browser does not support geolocation.';
               }
             }
-
-            document.querySelector('#see-position').addEventListener('click', successPositionHandler, false);
-            geoMap.addEventListener('click', successPositionHandler, false);
-          })();
-          </script>
-          </section>
-        </div>
-<div id="app-cache">
-           
-            
-          <header><h1>Application Cache</h1></header>
-          <section >
-
-           <p id="appcache-message">Turn off your internet connection and refresh this page!
-           <img src="refresh.png" onclick="window.location.reload();"/></p>
-         
-          </section>
-</div>
-<script>
+          document.querySelector('#see-position').addEventListener('click', successPositionHandler, false);
+          geoMap.addEventListener('click', successPositionHandler, false);
+        })();
+      </script>
+    </section>
+    </div>
+    <section>
+    <header><h1>Go to the console to view worker s messages ...   </h1></header>
+    </section>
+    <div class="slide offline-storage" id="app-cache">
+      <header><h1>Application Cache</h1></header>
+        <section class="appcache-examples">
+          <p id="appcache-message">Turn off your internet connection and refresh this page!
+          <img src="img/refresh.png" onclick="window.location.reload();"/></p>
+        </section>
+    </div>
+    <script>
       // Check if new appcache is available, load it, and reload page.
-      if (window.applicationCache) {alert("entro aca");
+      if (window.applicationCache) {
         window.applicationCache.addEventListener('updateready', function(e) {
           if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
             window.applicationCache.swapCache();
@@ -182,8 +169,7 @@
           }
         }, false);
       }
-<script>
-                
-</body>
+    <script>
+  </body>
 </html>
 
