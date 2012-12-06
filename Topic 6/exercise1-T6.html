@@ -1,133 +1,121 @@
 <!DOCTYPE html> 
 <html> 
-	<head> 
-	<title>Globant :: Welcome to the HTML5 bootcamp</title> 
-	</head>	
-	 
-<body>
-<div id="container">
-    <button>Load</button>
-    <ul id="list">
-    </ul>
-</div>
-<div id="details">detalles
-    <ul id="list">
-    </ul>
-</div>
- 
-<div id="list-template">
-<li><a href=""></a></li>
-</div>
-<div id="detail-template">
-<li></li>
-</div>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
-<script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
-<script type="text/javascript" src="http://documentcloud.github.com/backbone/backbone-min.js"></script>	
- <script type="text/javascript">
+  <head> 
+    <title>Globant :: Welcome to the HTML5 bootcamp</title> 
+    <script type="text/javascript" src="scripts/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/lib/underscore.js"></script>
+    <script type="text/javascript" src="scripts/lib/backbone-min.js"></script>
+  </head>	
+  <body>
+    <div id="container">
+     <ul></ul>
+    </div>
+    <div id="details">detalles
+      <ul id="x"></ul>
+    </div>
+    <script type="text/html" id="list-template">
+      <li><a href='#'><%= title %></a></li>
+    </script>
+    <script type="text/html" id="detail-template">
+      Details
+      <p>Title: <%= title %> . <%= year %></p><p><%= synopsis %></p>
+    </script>
+    	
+    <script type="text/javascript">
 
+      Movie = Backbone.Model.extend({
 
-  	Movie = Backbone.Model.extend({
+	initialize: function(){
+	  this.bind('change:title', function(){
+		/*console.log(this.get('title')+' has new title');*/
+          });
+	},
+	defaults:{
+	  title: '',synopsis:'',year:''
+	},
+	validate :function(attributes) {
+          if(attributes.title.length > 20) 
+            return 'title too long';
+        }
+      });
 
-		initialize: function(){
-			this.bind('change:title', function(){console.log(this.get('title')+' has new title');});
-			this.bind('error', function(model,error){console.log(error);});
-		},
-		defaults:{
-			title: 'no title',
-		},
-		validate :function(attributes) {if(attributes.title.length > 20) return 'title too long';}
-	});
+      MovieList = Backbone.Collection.extend({
 
-	var terminator = new Movie();
-	var ironman = new Movie();
-	var smith = new Movie();
+        model : Movie,
+	comparator: function(movie){return movie.get('title');}
+      });
+	
+      var View = Backbone.View.extend({
+    		
+	template: _.template($('#list-template').html()),
+	initialize: function () {
+          this.model.bind('change',this.render,this);
+	  this.model.bind('add',this.render,this);
+	  this.model.bind('remove',this.render,this);
+	  
+        },
+    	el: '#container',
+	events: {
+          "mouseover li": "renderDetails"
+    	},
+        render: function() {    		
+          var data = this.model;
+	  var ul= $('<ul>');       
+          for (var i=0, l=data.length; i<l; i++) {
+            var movie = data.at(i);
+            var li = this.template(movie.toJSON());
+            ul.append(li);
+          }
+	  $(this.el).html(ul);
+    	},
+	renderDetails : function(){
+		
+	  //FALTA CONECTAR LA VISTA DETALLADA ACA
+          //vistadetallada.model=this.model.where({title:title});
+	  //vistadetallada.render();
 
-	MovieList = Backbone.Collection.extend({
+           //console.log('mostrar los detalles');
+        }
+      });
 
-		model : Movie,
+      var DetailedView = Backbone.View.extend({
 
-		comparator: function(movie){return movie.get('title');}
+	template: _.template($('#detail-template').html()),
+	initialize: function(){
+          this.model.bind('change',this.render,this);
+	},
+	el: '#details',
+	render: function(){
+	  $(this.el).html(this.template(this.model.toJSON()));
+	  return this;
+        }
+      });
 
+      var terminator = new Movie();
+      var ironman = new Movie();
+      var smith = new Movie();
+      var vistadetallada = new DetailedView({model : terminator});
 
-	});
+      var movielist = new MovieList();
 
-	var movielist = new MovieList();
+      terminator.set({title : 'Terminator'});
+      terminator.set({year : '1984',synopsis:'Los Ángeles, año 2029. Las máquinas dominan el mundo. Los rebeldes que luchan contra ellas tienen como líder a John Connor, un hombre que nació en los años ochenta. Para acabar con la rebelión, las máquinas deciden enviar al pasado a un robot -Terminator- cuya misión será eliminar a Sarah Connor, la madre de John, e impedir así su nacimiento. '});
+      ironman.set({title : 'Ironman 2'});
+      smith.set({title : 'Sr. & Sra. Smith'});
 
-	terminator.set({title : 'Terminator'});
-	ironman.set({title : 'Ironman 2'});
-	smith.set({title : 'Sr. & Sra. Smith'});
+      movielist.add(terminator);
+      movielist.add(ironman);
+      movielist.add(smith)
 
-	movielist.add(terminator);
-	movielist.add(ironman);
-	movielist.add(smith)
+      movielist.sort();
+      
+      var view = new View({ model: movielist });
+      view.render();
 
+      //terminator.set({title: 'Terminator 2'});
 
-	movielist.sort();
-
-	console.log(movielist.at(0));
-	console.log(movielist.at(1));
-	console.log(movielist.at(2));
-
-
-
-	var View = Backbone.View.extend({
-    		initialize: function () {
-        		this.template = $('#list-template').children();
-    		},
-    		el: '#container',
-    		events: {
-        		"click button": "render"
-    		},
-   		 render: function() {
-        		var data = this.model;
-			       
-        		for (var i=0, l=data.length; i<l; i++) {
-            			var li = this.template.clone().find('a').attr('href', '#').text(data.at(i).get('title')).end();
-            			this.$el.find('ul').append(li);
-        		}
-    		}
-	});
-	var view = new View({ model: movielist });
-
-
-	var DetailedView = Backbone.View.extend({
-
-		initialize: function(){
-
-			this.template = $('#detail-template').children();
-
-		},
-		el: '#details',
-		events: {
-        		"click button": "render"
-    		},
-		render: function(){
-			var data = this.model.attributes;console.log('esto');
-				for (var i=0, l=data.length; i<l; i++) {
-            			//var li = this.template.clone().find('a').attr('href', '#').text(data.at(i).get('title')).end();
-            			this.$el.find('ul').append('<li>'+data[i]+'</li>');
-        		}
-
-
-
-		}
-
-
-
-	});
-
-	var vistadetallada = new DetailedView({model : terminator});
-	vistadetallada.render;
-
-
-
-
-
-
-
-
-</script>
-</body>
+      //movielist.remove(smith);
+  
+    </script>
+  </body>
 </html>
