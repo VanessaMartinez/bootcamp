@@ -24,32 +24,30 @@
     </div>
   </body>
   <script type="text/javascript">
-    $(document).ready(
-      function(){
-        $('#search').click( function() {
-          $.ajax({
-            type: 'GET',
-            url:'http://bootcamp.aws.af.cm/movies',
+    $(document).ready(function(){
+      $('#search').click( function() {
+        $.ajax({
+          type: 'GET',
+          url:'http://bootcamp.aws.af.cm/movies',
             dataType:'json',
             success: function(data) {
-              console.log(data);
-              capturingMovies(data);
-            },
-            error: function(data) {
-              console.log(data);
-            },
-          }); 
-        })
+            console.log(data);
+            capturingMovies(data);
+          },
+          error: function(data) {
+            console.log(data);
+          },
+        }); 
+      });
+      function capturingMovies(data){
+        var list="";
+        for(i=0;i<data.d.results.length;i++){
+          list=list+'<li><a href="#"><img src="'+data.d.results[i].BoxArt.SmallUrl+'">'+data.d.results[i].Name+'. '+data.d.results[i].ReleaseYear+'. '+data.d.results[i].Synopsis+'</a></li>';
+        }
+        $('#list').html(list);
+        $('#list').listview('refresh');
       }
-    );
-    function capturingMovies(data){
-      var list="";
-      for(i=0;i<data.d.results.length;i++){
-        list=list+'<li><a href="#"><img src="'+data.d.results[i].BoxArt.SmallUrl+'">'+data.d.results[i].Name+'. '+data.d.results[i].ReleaseYear+'. '+data.d.results[i].Synopsis+'</a></li>';
-      }
-      $('#list').html(list);
-      $('#list').listview('refresh');
-    }
+    });
   </script>
 </html>
  						 		  

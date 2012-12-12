@@ -23,10 +23,11 @@
   </body>
   <script>
     $(document).ready(function(){
-      $("#animation").click(pressButton);
+      $("#animation").click(showAnimation);
+    
+      function showAnimation(){
+        $.mobile.showPageLoadingMsg("a","loading...");
+      }
     });
-    function pressButton(){
-      $.mobile.showPageLoadingMsg("a","loading...");
-    }
   </script>
 </html>

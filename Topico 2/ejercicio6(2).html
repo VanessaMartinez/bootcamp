@@ -23,16 +23,19 @@
   </body>
   <script>
     $(document).ready(function(){
-      $("#animation").click(pressButton);
+      $("#animation").click(showAnimation);
       $(document).keydown(function(e){
-	if(e.keyCode == 27) pressEsc();
+        var ESCAPE_KEY = 27;
+	if(e.keyCode == ESCAPE_KEY){
+          hideAnimation();
+        }
       });
+      function showAnimation(){
+        $.mobile.showPageLoadingMsg("a","loading...");
+      }
+      function hideAnimation(){
+        $.mobile.hidePageLoadingMsg();
+      }
     });
-    function pressButton(){
-      $.mobile.showPageLoadingMsg("a","loading...");
-    }
-    function pressEsc(){
-      $.mobile.hidePageLoadingMsg();
-    }
   </script>
 </html>
