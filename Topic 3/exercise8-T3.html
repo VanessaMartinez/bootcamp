@@ -4,103 +4,95 @@
     <meta charset="utf-8" />
     <title>Globant :: Welcome to the HTML5 bootcamp</title>
     </head>
-<body>
-<h1>Topic 3: Exercise 8</h1>
-
-
-<script language="javascript">
-
-	document.write("Starts javascript, see the console...");
-
+  <body>
+    <h1>Topic 3: Exercise 8</h1>
+    <script language="javascript">
+      document.write("Starts javascript, see the console...");
+      var Movie = (function () {
+        // constructor
+   	var Movie = function () {};
+        // prototype
+    	Movie.prototype = {
+    	  constructor: Movie,
+          set : function(attr,value){
+            this[attr]=value;
+          },
+	  get : function(attr){
+            return this[attr];
+          },
+          play : function(){
+            this.publish('playing',this.get('title'));
+            return 'Playing '+ this.get('title') + ' ...';
+          },
+          stop : function(){
+            this.publish('stopped',this.get('title'));
+            return this.get('title')+' is stopped ...';
+          }
+    	};
+        // return module
+        return Movie;
+      })();
+      var observable = {
+	addSubscriber:function (callback) {
+          this.subscribers[this.subscribers.length] = callback;
+        },
+	removeSubscriber:function (callback) {
+	  for (var i = 0; i < this.subscribers.length; i++) {
+	    if (this.subscribers[i] === callback) {
+	      delete(this.subscribers[i]);
+	    }
+	  }
+	},
+	publish:function (what,who) {
+	  for (var i = 0; i < this.subscribers.length; i++) {
+	    if (typeof this.subscribers[i] === 'function') {
+	      this.subscribers[i](what,who);
+	    }
+	  }
+	},
+	make:function (o) { // turns an object into a publisher
+	  for (var i in this) {
+	    o[i] = this[i];
+	    o.subscribers = [];
+	  }
+	}
+      };
+      observable.make(Movie.prototype);
+      var movieObserver = {
+        notify:function (event,who) {
+          console.log('Event: ' +who+': '+event);
+        }
+      };
+      Movie.prototype.addSubscriber(movieObserver.notify);
 	
-	//----------------------------------------------------------------------------------------------------------
+      function DownloadableMovie(){
+        Object.getPrototypeOf(DownloadableMovie.prototype).constructor.call(this);
+      };
+      DownloadableMovie.prototype = Object.create(Movie.prototype);
+      DownloadableMovie.prototype.constructor = DownloadableMovie;
+      DownloadableMovie.prototype.download = function(){
+        return this.get('title')+' is downloading';
+      };
+      var terminator = new Movie(); 
+      terminator.set('title','Terminator');
+      terminator.set('year','1984');
+      terminator.set('director','James Cameron');
 
-	var Movie = (function () {
-  	  	
- 		 // constructor
-   		 var Movie = function () {};
+      var ironman = new Movie();
+      ironman.set('title','Iron Man 2');
+      ironman.set('year','2010');
+      ironman.set('director','Jon Favreau');
 
-    		// prototype
-    		Movie.prototype = {
-    		    constructor: Movie,
-		    set : function(attr,value){this[attr]=value;},
-		    get : function(attr){return this[attr];},
-		    play : function(){this.publish('playing',this.get('title'));return 'Playing '+ this.get('title') + ' ...';},
-		    stop : function(){this.publish('stopped',this.get('title'));return this.get('title')+' is stopped ...';}
-    		};
-
-    		// return module
-   		 return Movie;
-	})();
+      var smith = new DownloadableMovie();
+      smith.set('title','Mr. & Mrs. Smith');
+      smith.set('year','2005');
+      smith.set('director','Doug Liman');
 	
-	//-----------------------------------------------------------------------------------------------------------
-	
-	var observable = {
-				
-		addSubscriber:function (callback) {this.subscribers[this.subscribers.length] = callback;},
-	
-		removeSubscriber:function (callback) {
-			for (var i = 0; i < this.subscribers.length; i++) {
-				if (this.subscribers[i] === callback) {
-					delete(this.subscribers[i]);
-				}
-			}
-		},
-		publish:function (what,who) {
-			for (var i = 0; i < this.subscribers.length; i++) {
-				if (typeof this.subscribers[i] === 'function') {
-					this.subscribers[i](what,who);
-				}
-			}
-		},
-		make:function (o) { // turns an object into a publisher
-			for (var i in this) {
-				o[i] = this[i];
-				o.subscribers = [];
-			}
-		}
-	};
-
-
-	observable.make(Movie.prototype);
-	var movieObserver = {notify:function (event,who) {console.log('Event: ' +who+': '+event)}};
-	Movie.prototype.addSubscriber(movieObserver.notify);
-	//----------------------------------------------------------------------------------------------------------
-
-	function DownloadableMovie(){Object.getPrototypeOf(DownloadableMovie.prototype).constructor.call(this);};
-
-	DownloadableMovie.prototype = Object.create(Movie.prototype);
-	DownloadableMovie.prototype.constructor = DownloadableMovie;
-
-	DownloadableMovie.prototype.download = function(){return this.get('title')+' is downloading';};
-
-	//------------------------------------------------------------------------------------------------------------
-
-
-	var terminator = new Movie();
-	terminator.set('title','Terminator');
-	terminator.set('year','1984');
-	terminator.set('director','James Cameron');
-
-
-	var ironman = new Movie();
-	ironman.set('title','Iron Man 2');
-	ironman.set('year','2010');
-	ironman.set('director','Jon Favreau');
-
-	var smith = new DownloadableMovie();
-	smith.set('title','Mr. & Mrs. Smith');
-	smith.set('year','2005');
-	smith.set('director','Doug Liman');
-	
-	console.log(smith.download());
-	console.log(terminator.play());
-	console.log(terminator.stop());
-	console.log(smith.play());
-	
-	
-	document.write("end script");
-</script>
-
-</body>
+      console.log(smith.download());
+      console.log(terminator.play());
+      console.log(terminator.stop());
+      console.log(smith.play());
+      document.write("end script");
+    </script>
+  </body>
 </html>

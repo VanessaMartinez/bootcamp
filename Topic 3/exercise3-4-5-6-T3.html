@@ -4,62 +4,62 @@
     <meta charset="utf-8" />
     <title>Globant :: Welcome to the HTML5 bootcamp</title>
   </head>
-<body>
-<h1>Topic 3: Exercise 3, 4, 5 and 6</h1>
-
-<script language="javascript">
-
-	document.write('Starts javascript, see the console...');
-	
-	var observable = {
-				
-		addSubscriber:function (callback) {this.subscribers[this.subscribers.length] = callback;},
-	
-		removeSubscriber:function (callback) {
-			for (var i = 0; i < this.subscribers.length; i++) {
-				if (this.subscribers[i] === callback) {
-					delete(this.subscribers[i]);
-				}
-			}
-		},
-		publish:function (what,who) {
-			for (var i = 0; i < this.subscribers.length; i++) {
-				if (typeof this.subscribers[i] === 'function') {
-					this.subscribers[i](what,who);
-				}
-			}
-		},
-		make:function (o) { // turns an object into a publisher
-			for (var i in this) {
-				o[i] = this[i];
-				o.subscribers = [];
-			}
-		}
+  <body>
+    <h1>Topic 3: Exercise 3, 4, 5 and 6</h1>
+    <script language="javascript">
+      document.write('Starts javascript, see the console...');
+        var observable = {
+  	  addSubscriber:function (callback) {
+            this.subscribers[this.subscribers.length] = callback;
+          },
+	  removeSubscriber:function (callback) {
+	    for (var i = 0; i < this.subscribers.length; i++) {
+	      if (this.subscribers[i] === callback) {
+	        delete(this.subscribers[i]);
+	      }
+	    }
+          },
+	  publish:function (what,who) {
+	    for (var i = 0; i < this.subscribers.length; i++) {
+	      if (typeof this.subscribers[i] === 'function') {
+	        this.subscribers[i](what,who);
+	      }
+	    }
+	  },
+	  make:function (o) { // turns an object into a publisher
+	    for (var i in this) {
+	      o[i] = this[i];
+	      o.subscribers = [];
+	    }
+          }
 	};
-
-
 	function Movie(){};
-
 	observable.make(Movie.prototype);
-
-	Movie.prototype.play = function(){this.publish('playing',this.get('title'));return 'Playing '+ this.get('title') + ' ...';};
-	Movie.prototype.stop = function(){this.publish('stopped',this.get('title'));return this.get('title')+' is stopped ...';};
-
-	Movie.prototype.set = function(attr,value){this[attr]=value;};
-	Movie.prototype.get = function(attr){return this[attr];};
-
-
-
-	var movieObserver = {notify:function (event,who) {console.log('Event: ' +who+': '+event)}};
-
+	Movie.prototype.play = function(){
+          this.publish('playing',this.get('title'));
+          return 'Playing '+ this.get('title') + ' ...';
+        };
+	Movie.prototype.stop = function(){
+          this.publish('stopped',this.get('title'));
+          return this.get('title')+' is stopped ...';
+        };
+	Movie.prototype.set = function(attr,value){
+          this[attr]=value;
+        };
+	Movie.prototype.get = function(attr){
+          return this[attr];
+        };
+        var movieObserver = {
+          notify:function (event,who) {
+            console.log('Event: ' +who+': '+event);
+          }
+        };
 	Movie.prototype.addSubscriber(movieObserver.notify);
-
 
 	var terminator = new Movie();
 	terminator.set('title','Terminator');
 	terminator.set('year','1984');
 	terminator.set('director','James Cameron');
-
 
 	var ironman = new Movie();
 	ironman.set('title','Iron Man 2');
@@ -68,11 +68,9 @@
 
 	console.log(terminator.play());
 	console.log(terminator.stop());
-
 	console.log(ironman.play());
 
 	document.write("end script");
-</script>
-
-</body>
+    </script>
+  </body>
 </html>

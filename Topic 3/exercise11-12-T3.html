@@ -4,186 +4,186 @@
     <meta charset="utf-8" />
     <title>Globant :: Welcome to the HTML5 bootcamp</title>
   </head>
-<body>
-<h1>Topic 3: Exercise 11 and 12</h1>
-
-
-<script language="javascript">
-
-	document.write("Starts javascript, see the console...");
-
-	//-------------------------------------------------------------------------------------------------
-	var Movie = (function () {
-  	  	
- 		 // constructor
-   		 var Movie = function () {};
-
-    		// prototype
-    		Movie.prototype = {
-    		    constructor: Movie,
-		    set : function(attr,value){this[attr]=value;},
-		    get : function(attr){return this[attr];},
-		    play : function(){this.publish('playing',this.get('title'));return 'Playing '+ this.get('title') + ' ...';},
-		    stop : function(){this.publish('stopped',this.get('title'));return this.get('title')+' is stopped ...';}
-    		};
-
-    		// return module
-   		 return Movie;
-	})();
+  <body>
+    <h1>Topic 3: Exercise 11 and 12</h1>
+    <script language="javascript">
+      document.write("Starts javascript, see the console...");
+      var Movie = (function () {
+  	// constructor
+   	var Movie = function () {};
+	// prototype
+    	Movie.prototype = {
+          constructor: Movie,
+            set : function(attr,value){
+            this[attr]=value;
+          },
+          get : function(attr){
+            return this[attr];
+          },
+          play : function(){
+            this.publish('playing',this.get('title'));
+            return 'Playing '+ this.get('title') + ' ...';
+          },
+          stop : function(){
+            this.publish('stopped',this.get('title'));
+            return this.get('title')+' is stopped ...';
+          }
+    	};
+        // return module
+   	return Movie;
+      })();
 	
-	//-----------------------------------------------------------------------------------------------
-	var observable = {
-				
-		addSubscriber:function (callback) {this.subscribers[this.subscribers.length] = callback;},
-	
-		removeSubscriber:function (callback) {
-			for (var i = 0; i < this.subscribers.length; i++) {
-				if (this.subscribers[i] === callback) {
-					delete(this.subscribers[i]);
-				}
-			}
-		},
-		publish:function (what,who) {
-			for (var i = 0; i < this.subscribers.length; i++) {
-				if (typeof this.subscribers[i] === 'function') {
-					this.subscribers[i](what,who);
-				}
-			}
-		},
-		make:function (o) { // turns an object into a publisher
-			for (var i in this) {
-				o[i] = this[i];
-				o.subscribers = [];
-			}
-		}
-	};
-
-	observable.make(Movie.prototype);
-	var movieObserver = {notify:function (event,who) {console.log('Event: ' +who+': '+event)}};
-	Movie.prototype.addSubscriber(movieObserver.notify);
+      var observable = {
+	addSubscriber:function (callback) {this.subscribers[this.subscribers.length] = callback;},
+	removeSubscriber:function (callback) {
+	  for (var i = 0; i < this.subscribers.length; i++) {
+	    if (this.subscribers[i] === callback) {
+	      delete(this.subscribers[i]);
+	    }
+	  }
+	},
+	publish:function (what,who) {
+	  for (var i = 0; i < this.subscribers.length; i++) {
+	    if (typeof this.subscribers[i] === 'function') {
+	      this.subscribers[i](what,who);
+	    }
+	  }
+	},
+	make:function (o) { // turns an object into a publisher
+	  for (var i in this) {
+	    o[i] = this[i];
+	    o.subscribers = [];
+	  }
+	}
+      };
+      observable.make(Movie.prototype);
+      var movieObserver = {
+        notify:function (event,who) {
+          console.log('Event: ' +who+': '+event);
+        }
+      };
+      Movie.prototype.addSubscriber(movieObserver.notify);
  
-	//----------------------------------------------------------------------------------------------------
-	
-	function DownloadableMovie(){Object.getPrototypeOf(DownloadableMovie.prototype).constructor.call(this);};
-	DownloadableMovie.prototype = Object.create(Movie.prototype);
-	DownloadableMovie.prototype.constructor = DownloadableMovie;
-	DownloadableMovie.prototype.download = function(){return this.get('title')+' is downloading';};
+      function DownloadableMovie(){
+        Object.getPrototypeOf(DownloadableMovie.prototype).constructor.call(this);
+      };
+      DownloadableMovie.prototype = Object.create(Movie.prototype);
+      DownloadableMovie.prototype.constructor = DownloadableMovie;
+      DownloadableMovie.prototype.download = function(){
+        return this.get('title')+' is downloading';
+      };
 
-	//-----------------------------------------------------------------------------------------------------
-	var terminator = new Movie();
+      var terminator = new Movie();
+      terminator.set('title','Terminator');
+      terminator.set('year','1984');
+      terminator.set('director','James Cameron');
 
-	terminator.set('title','Terminator');
-	terminator.set('year','1984');
-	terminator.set('director','James Cameron');
-	
-	var ironman = new Movie();
+      var ironman = new Movie();
+      ironman.set('title','Iron Man 2');
+      ironman.set('year','2010');
+      ironman.set('director','Jon Favreau');
 
-	ironman.set('title','Iron Man 2');
-	ironman.set('year','2010');
-	ironman.set('director','Jon Favreau');
+      var smith = new DownloadableMovie();
 
-	var smith = new DownloadableMovie();
+      smith.set('title','Mr. & Mrs. Smith');
+      smith.set('year','2005');
+      smith.set('director','Doug Liman');
+      console.log(smith.download());
 
-	smith.set('title','Mr. & Mrs. Smith');
-	smith.set('year','2005');
-	smith.set('director','Doug Liman');
-	console.log(smith.download());
-
-	//--------------------------------- MIXIN --------------------------------------
-	var asSocial = function(){//MIXIN FUNCIONAL
- 	
-	this.likeCount = 0;
+      var asSocial = function(){//MIXIN FUNCIONAL
+ 	this.likeCount = 0;
 	this.shareCount = 0;
+	this.share = function(friendName){ 
+          this.shareCount++;
+          return 'Sharing '+this.get('title')+' with '+friendName+' ('+this.shareCount+' shares)';
+        };
+	this.like = function(){ 
+          this.likeCount++;
+           return this.get('title')+' I LIKE! ('+this.likeCount+')';
+        };
+      };
+      asSocial.call(Movie.prototype);//add functional mixin 
 
-	this.share = function(friendName){ this.shareCount++;return 'Sharing '+this.get('title')+' with '+friendName+' ('+this.shareCount+' shares)';};
+      //ACTOR
+      var actor = Object.create(null);
+
+      Object.defineProperty(actor,'name',{value:'no name',writable:true,configurable:true,enumerable:true});
+      Object.defineProperty(actor,'gender',{value:'no gender',writable:true,configurable:true,enumerable:true});
+      Object.defineProperty(actor,'age',{value:'no age',writable:true,configurable:true,enumerable:true});
+
+      var brad = Object.create(actor);
+      brad.name = 'Brad Pitt';
+      brad.gender = 'Male';
+      brad.age = 53;
+      
+      var angy = Object.create(actor);
+      angy.name = 'Angelina Jolie';
+      angy.gender = 'Female';
+
+      console.log(brad.name+'. '+brad.gender+'. '+brad.age);
+      console.log(angy.name+'. '+angy.gender+'. '+angy.age);
+
+      var actors = [brad,angy];
+
+      //adds the attribute 'actors' to the movie 
 	
-	this.like = function(){ this.likeCount++;return this.get('title')+' I LIKE! ('+this.likeCount+')';};
-
-	};
- 
-	asSocial.call(Movie.prototype);//add functional mixin 
-
-	//---------------------------- ACTOR -------------------------------------------
-	var actor = Object.create(null);
-
-	Object.defineProperty(actor,'name',{value:'no name',writable:true,configurable:true,enumerable:true});
-	Object.defineProperty(actor,'gender',{value:'no gender',writable:true,configurable:true,enumerable:true});
-	Object.defineProperty(actor,'age',{value:'no age',writable:true,configurable:true,enumerable:true});
-
+      var Movie = (function (Movie) {
+  	Movie.prototype.addActors = function(actors){
+          this.set('actors',actors);
+        };
+	Movie.prototype.viewAttributes = function(){ //returns an object with all the movie data
+          var key, result;
+	  result ={};
+	  for(key in this){
+	    if (this.hasOwnProperty(key)){ 
+              result[key] = this[key];
+            }
+          }
+	  return result;
+	};   		 
+	return Movie;
+      })(Movie);
 	
-	var brad = Object.create(actor);
-	brad.name = 'Brad Pitt';
-	brad.gender = 'Male';
-	brad.age = 53;
-
-	var angy = Object.create(actor);
-	angy.name = 'Angelina Jolie';
-	angy.gender = 'Female';
-
-	console.log(brad.name+'. '+brad.gender+'. '+brad.age);
-	console.log(angy.name+'. '+angy.gender+'. '+angy.age);
-
-	var actors = [brad,angy];
-
-	//adds the attribute 'actors' to the movie 
+      smith.addActors(actors);
 	
-	var Movie = (function (Movie) {
-  		
-		Movie.prototype.addActors = function(actors){this.set('actors',actors);};
-		
-		Movie.prototype.viewAttributes = function(){ //returns an object with all the movie data
-							var key, result;
-							result ={};
-							for(key in this)
-								if (this.hasOwnProperty(key)) result[key] = this[key];
-							return result;
-						};   		 
-		return Movie;
-	})(Movie);
+      var arnold = Object.create(actor);
+      arnold.name = 'Arnold Schwarzenegger';
+      arnold.gender = 'Male';
+      arnold.age = 53;
+
+      var linda = Object.create(actor);
+      linda.name = 'Linda Hamilton';
+      linda.gender = 'Female';
+
+      var michael = Object.create(actor);
+      michael.name = 'Michael Biehn';
+      michael.gender = 'Male';
+
+      var actors = [arnold,linda,michael];
+      terminator.addActors(actors);
 	
-	smith.addActors(actors);
+      var robert = Object.create(actor);
+      robert.name = 'Robert Downey Jr.';
+      robert.gender = 'Male';
+
+      var scarlett = Object.create(actor);
+      scarlett.name = 'Scarlett Johansson';
+      scarlett.gender = 'Female';
+
+      var gwyneth = Object.create(actor);
+      gwyneth.name = 'Gwyneth Paltrow';
+      gwyneth.gender = 'Female';
+
+      var actors = [robert,scarlett,gwyneth]; 
+      ironman.addActors(actors);
 	
-	var arnold = Object.create(actor);
-	arnold.name = 'Arnold Schwarzenegger';
-	arnold.gender = 'Male';
-	arnold.age = 53;
-
-	var linda = Object.create(actor);
-	linda.name = 'Linda Hamilton';
-	linda.gender = 'Female';
-
-	var michael = Object.create(actor);
-	michael.name = 'Michael Biehn';
-	michael.gender = 'Male';
-
-	var actors = [arnold,linda,michael];
-	terminator.addActors(actors);
-
+      console.log(smith.viewAttributes());
+      console.log(terminator.viewAttributes());
+      console.log(ironman.viewAttributes());
 	
-	var robert = Object.create(actor);
-	robert.name = 'Robert Downey Jr.';
-	robert.gender = 'Male';
-
-	var scarlett = Object.create(actor);
-	scarlett.name = 'Scarlett Johansson';
-	scarlett.gender = 'Female';
-
-	var gwyneth = Object.create(actor);
-	gwyneth.name = 'Gwyneth Paltrow';
-	gwyneth.gender = 'Female';
-
-	var actors = [robert,scarlett,gwyneth]; 
-	ironman.addActors(actors);
+      console.log(smith.play());
 	
-	console.log(smith.viewAttributes());
-	console.log(terminator.viewAttributes());
-	console.log(ironman.viewAttributes());
-	
-	console.log(smith.play());
-	
-	document.write('end script');
-
-</script>
-
-</body>
+      document.write('end script');
+    </script>
+  </body>
 </html>
