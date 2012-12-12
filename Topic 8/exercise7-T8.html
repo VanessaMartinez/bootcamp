@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Globant :: Welcome to the HTML5 bootcamp</title>
-    <!--<link rel="stylesheet" type="text/css" media="screen"href="estilos.css" />-->
+    <link rel="stylesheet" type="text/css" media="screen"href="estilos.css" />
     <script src="js/google.js"></script>
     <script src="js/main.js"></script>
   </head>
@@ -17,11 +17,6 @@
       <p id="log"></p>
       <script defer>
         (function(){
-          try {
-            (window.localStorage.getItem) // will throw in Firefox under some settings
-          } catch(e){
-            return; // quit because dom.storage.enabled is false
-          }
           var area = document.querySelector('#area');
           // place content from previous edit
           if (!area.value) {
@@ -74,22 +69,6 @@
       }
     </script>
     <div class="slide device-access" id="geolocation">
-      <style>
-        #see-position {
-          margin-bottom: 10px;
-        }
-        #geo-map {
-          height: 280px;
-          width: 640px;
-        }
-        #geo-log {
-          background-color: red;
-          color: white;
-          padding: 5px;
-          border-radius: 5px;
-            visibility: hidden;
-          }
-      </style>
       <header><h1>Geolocation</h1></header>
       <section>
         <button id="see-position">Show Position</button> <span id="geo-log"></span>

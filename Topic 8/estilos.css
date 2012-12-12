@@ -1,0 +1,14 @@
+#see-position {
+  margin-bottom: 10px;
+}
+#geo-map {
+  height: 280px;
+  width: 640px;
+}
+#geo-log {
+  background-color: red;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  visibility: hidden;
+}
