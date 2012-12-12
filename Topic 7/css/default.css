@@ -1,46 +1,59 @@
-nav a:hover{background-color:#ff0;}
-/*nav ul{list-style-type: none;text-align: center;} 
-nav li{display:inline;text-align: center;width:100px;background-color:#ddd;}*/
-
-span.hiOne{background-color:#f00;}
-span.hiTwo{background-color:#0f0;}
-span.hiThree{background-color:#00f;}
-span[class^='hi']{background-color:#0ff;}
-span[class$='One']{background-color:#f0f;}
-
-span {background-color:#000 !important;color:#fff;}
-
-article header a:first-of-type { color:#f00; }
-
-article header a:first-of-type ~ a{ color:#f0f;}
-
-p:empty {color=#00f;}
-
+nav a:hover{
+  background-color:#ff0;
+}
+span.hiOne{
+  background-color:#f00;
+}
+span.hiTwo{
+  background-color:#0f0;
+}
+span.hiThree{
+  background-color:#00f;
+}
+span[class^='hi']{
+  background-color:#0ff;
+}
+span[class$='One']{
+  background-color:#f0f;
+}
+span {
+  background-color:#000 !important;
+  color:#fff;
+}
+article header a:first-of-type { 
+  color:#f00; 
+}
+article header a:first-of-type ~ a{ 
+  color:#f0f;
+}
+p:empty {
+  color=#00f;
+}
 article {
-background-color: #ddd;
--moz-box-shadow: 3px 3px 4px #000;
--webkit-box-shadow: 3px 3px 4px #000;
-box-shadow: 3px 3px 4px #000;
-/* For IE 8 */
--ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
-/* For IE 5.5 - 7 */
-filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
+  background-color: #ddd;
+  -moz-box-shadow: 3px 3px 4px #000;
+  -webkit-box-shadow: 3px 3px 4px #000;
+  box-shadow: 3px 3px 4px #000;
+  /* For IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
+  /* For IE 5.5 - 7 */
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
-
 aside {
-behavior:url(-ms-transform.htc);
--moz-transform:rotate(180deg);
--webkit-transform:rotate(180deg);
--o-transform:rotate(180deg);
--ms-transform:rotate(180deg);
+  behavior:url(-ms-transform.htc);
+  -moz-transform:rotate(180deg);
+  -webkit-transform:rotate(180deg);
+  -o-transform:rotate(180deg);
+  -ms-transform:rotate(180deg);
 }
 
-h1,h2 {text-align:center;}
-/*video{float:left;}*/
-section.mainContent{column-width:600px;column-gap:20px;}
-/*section article header{column-span:all;}*/
-
-
+h1,h2 {
+  text-align:center;
+}
+section.mainContent{
+  column-width:600px;
+  column-gap:20px;
+}
 #menu {
   width:100%;
   padding:0px;
@@ -48,7 +61,6 @@ section.mainContent{column-width:600px;column-gap:20px;}
   list-style-type:none;
 }
 #menu a {
-  /*float:left;*/
   width:50px;
   text-decoration:none;
   text-align:center;

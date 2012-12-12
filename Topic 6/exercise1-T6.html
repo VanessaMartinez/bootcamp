@@ -27,11 +27,13 @@
 
 	initialize: function(){
 	  this.bind('change:title', function(){
-		/*console.log(this.get('title')+' has new title');*/
+		console.log(this.get('title')+' has new title');
           });
 	},
 	defaults:{
-	  title: '',synopsis:'',year:''
+	  title: '',
+          synopsis:'',
+          year:''
 	},
 	validate :function(attributes) {
           if(attributes.title.length > 20) 
@@ -42,7 +44,9 @@
       MovieList = Backbone.Collection.extend({
 
         model : Movie,
-	comparator: function(movie){return movie.get('title');}
+	comparator: function(movie){
+          return movie.get('title');
+        }
       });
 	
       var View = Backbone.View.extend({
@@ -71,10 +75,6 @@
 	renderDetails : function(){
 		
 	  //FALTA CONECTAR LA VISTA DETALLADA ACA
-          //vistadetallada.model=this.model.where({title:title});
-	  //vistadetallada.render();
-
-           //console.log('mostrar los detalles');
         }
       });
 
@@ -112,10 +112,6 @@
       var view = new View({ model: movielist });
       view.render();
 
-      //terminator.set({title: 'Terminator 2'});
-
-      //movielist.remove(smith);
-  
     </script>
   </body>
 </html>

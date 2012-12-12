@@ -2,37 +2,52 @@ body {
   background:white;
   margin:50px;
 }
-h1,h2 {text-align:center;}
-a {color:#000;text-decoration:none}
-
-nav ul{margin:0;padding:0 1em 0 0;text-align:center}
-nav li{display:inline;padding-left:1em}
-header{background:black;color:white;margin:0;padding:1.75em 0;}
-
-@media screen and (min-device-width: 1200px) {
-.central-text{
-  -moz-column-count:4;
-  -webkit-column-count:4;
-  column-count:4;
-  padding:10px;
+h1,h2 {
+  text-align:center;
 }
-img {width: 150px; height: 150px;}
+a {
+  color:#000;
+  text-decoration:none;
+}
+nav ul{
+  margin:0;
+  padding:0 1em 0 0;
+  text-align:center
+}
+nav li{
+  display:inline;
+  padding-left:1em
+}
+header{
+  background:black;
+  color:white;
+  margin:0;
+  padding:1.75em 0;
+}
+@media screen and (min-device-width: 1200px) {
+  .central-text{
+    -moz-column-count:4;
+    -webkit-column-count:4;
+    column-count:4;
+    padding:10px;
+  }
+  img {width: 150px; height: 150px;}
 }
 @media screen and (min-device-width: 800px) and (max-device-width: 1199px) {
-.central-text{
-  -moz-column-count:3;
-  -webkit-column-count:3;
-  column-count:3;
-  padding:10px;
-}
-img {width: 50px; height: 50px;}
+  .central-text{
+    -moz-column-count:3;
+    -webkit-column-count:3;
+    column-count:3;
+    padding:10px;
+  }
+  img {width: 50px; height: 50px;}
 }
 @media screen and (max-device-width: 799px) {
-.central-text{
-  border-radius: 20px;  
-  background-color:#ddd;
-  padding:10px;
-  padding:10px;
-}
+ .central-text{
+    border-radius: 20px;  
+    background-color:#ddd;
+    padding:10px;
+    padding:10px;
+  }
   img {display:none;}
 }
