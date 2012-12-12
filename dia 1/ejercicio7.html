@@ -11,22 +11,24 @@
     <div id="div"></div>
   </body>
   <script type="text/javascript">
+    $(document).ready(function(){
     $('#greeting').click( 
-      function() {
-        $.ajax({
-	  type: 'GET',
-          url:'http://bootcamp.aws.af.cm/welcome/vane',
-          dataType:'json',
- 	  success: function(data) {
-            $('#div').text(data.response) ;
-          },
- 	  error: function( data ) {
-            $('#div').text('Error...') ;
-            $('#div').css('color','red') ;
-          },
-        })
-      }
-    ); 
+        function() {
+          $.ajax({
+	    type: 'GET',
+            url:'http://bootcamp.aws.af.cm/welcome/vane',
+            dataType:'json',
+ 	    success: function(data) {
+              $('#div').text(data.response) ;
+            },
+ 	    error: function( data ) {
+              $('#div').text('Error...') ;
+              $('#div').css('color','red') ;
+            },
+          })
+        }
+      );
+    }); 
   </script>
 </html>
 

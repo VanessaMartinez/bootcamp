@@ -1,0 +1,15 @@
+#box{
+  left: 5%;
+  position: absolute;
+  top: 10%; 
+  width: 90%;
+  background-color: grey;
+}
+.bgtransparent{
+  position:fixed;
+  left:0;
+  top:0;
+  background-color:#555;
+  opacity:0.6;
+  filter:alpha(opacity=60);
+}

@@ -10,20 +10,22 @@
     <input type="button" id="greeting" value="Greeting">
   </body>
   <script type="text/javascript">
-    $("#greeting").click(
-      function(){
-        $.ajax({
-          type: 'GET',
-          url:'http://bootcamp.aws.af.cm/welcome/vane',
-          dataType:'json',
- 	  success: function(data) {
-            console.log(data.response);
-          },
- 	  error: function(data) {
-            console.log('Error....');
-          },
-        })                      
-      }
-    );
+    $(document).ready(function(){  
+      $("#greeting").click(
+        function(){
+          $.ajax({
+            type: 'GET',
+            url:'http://bootcamp.aws.af.cm/welcome/vane',
+            dataType:'json',
+ 	    success: function(data) {
+              console.log(data.response);
+            },
+ 	    error: function(data) {
+              console.log('Error....');
+            },
+          })                      
+        }
+      );
+    });
   </script>
 </html>

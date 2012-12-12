@@ -11,27 +11,29 @@
     <div id="div"></div>
   </body>
   <script type="text/javascript">
-    $('#greeting').click( 
-      function() {
-        $.ajax({
-	  type: 'GET',
-          url:'http://bootcamp.aws.af.cm/welcome/vane',
-          dataType:'json',
- 	  success: function(data) {
-            $('#div').text(data.response) ;
-            highlightName();
-          },
- 	  error: function( data ) {
-            $('#div').text('Error....') ;
-            $('#div').css('color','red') ;
-          },
-       })
-    }) ; 
-    function highlightName(){
-      var x=/vane/gi;
-      var y=$('#div').html();
-      $('#div').html(y.replace(x,"<b>"+x.exec(y)+"</b>"));
-    }
+    $(document).ready(function(){
+      $('#greeting').click( 
+        function() {
+          $.ajax({
+	    type: 'GET',
+            url:'http://bootcamp.aws.af.cm/welcome/vane',
+            dataType:'json',
+ 	    success: function(data) {
+              $('#div').text(data.response) ;
+              highlightName();
+            },
+ 	    error: function( data ) {
+              $('#div').text('Error....') ;
+              $('#div').css('color','red') ;
+            },
+         })
+      }); 
+      function highlightName(){
+        var x=/vane/gi;
+        var y=$('#div').html();
+        $('#div').html(y.replace(x,"<b>"+x.exec(y)+"</b>"));
+      }
+    });
   </script>
 </html>
 

@@ -3,24 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <title>Globant :: Welcome to the HTML5 bootcamp</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script type="text/javascript" src="jquery.js"></script>
-  <style>
-    #box{
-      left: 5%;
-      position: absolute;
-      top: 10%; 
-      width: 90%;
-      background-color: grey;
-    }
-    .bgtransparent{
-      position:fixed;
-      left:0;
-      top:0;
-      background-color:#555;
-      opacity:0.6;
-      filter:alpha(opacity=60);
-    }
-  </style>
   </head>
   <body>
     <input type='text' id='alias'>
@@ -28,28 +12,30 @@
     <div id='box' align='center'></div>
   </body>
   <script type="text/javascript">
-    function capturingMovies(data){
-      var list="";
-      for(i=0;i<data.d.results.length;i++){
-        list=list+'<img src="'+data.d.results[i].BoxArt.SmallUrl+'"><br> '+data.d.results[i].Name+'. '+data.d.results[i].ReleaseYear+'. '+data.d.results[i].Synopsis+'<br>';
+    $(document).ready(function(){
+      function capturingMovies(data){
+        var list="";
+        for(i=0;i<data.d.results.length;i++){
+          list=list+'<img src="'+data.d.results[i].BoxArt.SmallUrl+'"><br> '+data.d.results[i].Name+'. '+data.d.results[i].ReleaseYear+'. '+data.d.results[i].Synopsis+'<br>';
+        }
+        $('#box').html(list);
       }
-      $('#box').html(list);
-    }
-    $('#movies').click( 
-      function() {
-        $.ajax({
-	  type: 'GET',
-          url:'http://bootcamp.aws.af.cm/movies',
-          dataType:'json',
- 	  success: function(data) {
-            console.log(data);
-            capturingMovies(data);
-          },
- 	  error: function(data) {
-            console.log(data);
-          },
-	})
-      }
-    ); 
+      $('#movies').click( 
+        function() {
+          $.ajax({
+	    type: 'GET',
+            url:'http://bootcamp.aws.af.cm/movies',
+            dataType:'json',
+ 	    success: function(data) {
+              console.log(data);
+              capturingMovies(data);
+            },
+ 	    error: function(data) {
+              console.log(data);
+            },
+	  })
+        }
+      );
+    }); 
   </script>
 </html>
